@@ -11,19 +11,29 @@ defineOptions({
     <div class="header">
       <div class="left">解析病历模板</div>
       <div class="right">
-        <el-button style="border-color: #409eff">
-          <el-icon color="#409eff"><Plus /></el-icon>
+        <el-button>
+          <el-icon><Plus /></el-icon>
           <span class="text">新增</span>
         </el-button>
       </div>
     </div>
 
-    <div class="content"></div>
+    <div class="content">
+      <el-table style="width: 100%" border>
+        <el-table-column prop="date" label="Date" width="180" />
+        <el-table-column prop="name" label="Name" width="180" />
+        <el-table-column prop="address" label="Address" />
+      </el-table>
+    </div>
 
     <div class="bottom">
       <div class="btns">
-        <el-button type="default">取消</el-button>
-        <el-button type="primary">保存</el-button>
+        <el-button type="default" plain>
+          <span>取消</span>
+        </el-button>
+        <el-button type="primary">
+          <span>保存</span>
+        </el-button>
       </div>
     </div>
   </div>
@@ -54,7 +64,6 @@ defineOptions({
     }
 
     .right .text {
-      color: #409eff;
       position: relative;
       top: 1px;
     }
@@ -62,6 +71,7 @@ defineOptions({
 
   .content {
     flex: 1;
+    padding: 20px;
   }
 
   .bottom {
@@ -69,6 +79,17 @@ defineOptions({
     height: 58px;
     line-height: 58px;
     text-align: right;
+
+    .btns {
+      padding-right: 30px;
+    }
+
+    .btns span {
+      position: relative;
+      top: 1px;
+      display: flex;
+      padding: 0 10px;
+    }
   }
 }
 </style>
