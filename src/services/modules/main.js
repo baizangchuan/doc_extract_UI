@@ -10,6 +10,18 @@ export function getSampleTypeListApi() {
 }
 
 /**
+ * 获取样本列表
+ * @param {*} params
+ * @returns
+ */
+export function getSampleListApi(params) {
+  return spdRequest.get({
+    url: '/sample/list',
+    params
+  })
+}
+
+/**
  * 获取模板可用列表
  * @param {string} orgName 机构ID
  * @param {string} recordType 文书类别
@@ -22,5 +34,30 @@ export function getAvailibleTemplateApi(orgName, recordType) {
       orgName,
       recordType
     }
+  })
+}
+
+/**
+ * 上传样本文件
+ */
+export function uploadSampleFileApi(file) {
+  const fd = new FormData()
+  fd.append('file', file)
+  return spdRequest.post({
+    url: '/sample/upload',
+    data: fd,
+    contentType: 'multipart/form-data'
+  })
+}
+
+/**
+ * 创建解析任务
+ * @param {*} data
+ * @returns
+ */
+export function saveTaskApi(data) {
+  return spdRequest.post({
+    url: '/task/save',
+    data
   })
 }

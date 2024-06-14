@@ -17,7 +17,7 @@ const searchParams = reactive({
 const orgList = ref([])
 const recordTypeList = ref([])
 const templateList = ref([])
-const action = ref('create')
+const action = ref('query')
 
 // 获取查询下拉框数据
 const getSelectData = async () => {
@@ -30,7 +30,6 @@ const getSelectData = async () => {
 const getTemplateList = async () => {
   const result = await getAvailibleTemplateApi(searchParams.orgName, searchParams.recordType)
   templateList.value = result.data
-  console.log(result)
 }
 
 // 初始化
@@ -41,8 +40,11 @@ const loadData = async () => {
 
 loadData()
 
-const handleCreateTaskBack = () => {
+const handleCreateTaskBack = (flag) => {
   action.value = 'query'
+  if (flag) {
+    loadData()
+  }
 }
 </script>
 
