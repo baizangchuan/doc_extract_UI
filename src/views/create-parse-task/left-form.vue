@@ -1,9 +1,9 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { UploadFilled, Close } from '@element-plus/icons-vue'
+import { UploadFilled } from '@element-plus/icons-vue'
 
-import CompressedFileSvg from '@/assets/svg/compressed-file.svg'
+import UploadPreview from '@/components/upload-preview/index.vue'
 
 const emit = defineEmits(['toggle-button-disabled', 'data-preview'])
 
@@ -116,22 +116,13 @@ defineExpose({
         </div>
       </el-upload>
 
-      <div v-if="uploadResult" class="upload-preview">
-        <div class="icon">
-          <img :src="CompressedFileSvg" width="32" height="32" alt="" />
-        </div>
-
-        <div class="content">
-          <h4>{{ uploadResult.fileName }}</h4>
-          <p>文件大小：{{ uploadResult.fileSize }}</p>
-          <p>上传时间：{{ uploadResult.gmtCreated }}</p>
-          <p>样本总数：{{ uploadResult.sampleNum }}</p>
-        </div>
-
-        <div class="close-icon" @click="handleCleanFile">
-          <el-icon><Close /></el-icon>
-        </div>
-      </div>
+      <template v-if="uploadResult">
+        <UploadPreview
+          :close-icon="true"
+          :file-info="uploadResult"
+          @close-preview="handleCleanFile"
+        />
+      </template>
     </el-form-item>
 
     <el-form-item label="机构名称：" prop="orgName">
@@ -153,38 +144,6 @@ defineExpose({
 
 .el-upload__tip {
   line-height: 20px;
-}
-
-.upload-preview {
-  padding: 10px;
-  border: 1px solid #dcdfe6;
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  .icon {
-    width: 46px;
-  }
-
-  .content {
-    flex: 1;
-    line-height: 24px;
-    font-size: 13px;
-    position: relative;
-  }
-
-  .content h4 {
-    font-size: 14px;
-  }
-
-  .close-icon {
-    position: absolute;
-    right: 10px;
-    top: 16px;
-    cursor: pointer;
-    padding: 2px 6px;
-    line-height: 18px;
-  }
 }
 
 .preview-btn {

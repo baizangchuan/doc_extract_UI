@@ -61,3 +61,33 @@ export function saveTaskApi(data) {
     data
   })
 }
+
+/**
+ * 获取任务列表
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @returns
+ */
+export function getTaskListApi(pageNum, pageSize) {
+  return spdRequest.get({
+    url: '/task/list',
+    params: {
+      pageNum,
+      pageSize
+    }
+  })
+}
+
+/**
+ * 查询任务详情
+ * @param {*} parseTaskId
+ * @returns
+ */
+export function getTaskInfoApi(parseTaskId) {
+  return spdRequest.get({
+    url: '/task/info',
+    params: {
+      parseTaskId
+    }
+  })
+}

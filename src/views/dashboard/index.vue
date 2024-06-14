@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
-import CreateParseTask from '@/components/create-parse-task/index.vue'
 import TemplateList from './template-list.vue'
 
 import { getSampleTypeListApi, getAvailibleTemplateApi } from '@/services'
@@ -10,6 +10,8 @@ defineOptions({
   name: 'Dashboard'
 })
 
+const router = useRouter()
+
 const searchParams = reactive({
   orgName: '',
   recordType: ''
@@ -17,7 +19,7 @@ const searchParams = reactive({
 const orgList = ref([])
 const recordTypeList = ref([])
 const templateList = ref([])
-const action = ref('query')
+const pageAction = ref('query')
 
 // 获取查询下拉框数据
 const getSelectData = async () => {
@@ -40,17 +42,14 @@ const loadData = async () => {
 
 loadData()
 
-const handleCreateTaskBack = (flag) => {
-  action.value = 'query'
-  if (flag) {
-    loadData()
-  }
+const goCreateTask = () => {
+  router.push({ path: '/create-parse-task' })
 }
 </script>
 
 <template>
   <!-- 任务列表 -->
-  <template v-if="action === 'query'">
+  <template v-if="pageAction === 'query'">
     <div class="dashboard">
       <!-- 查询条件 -->
       <div class="header">
@@ -81,7 +80,7 @@ const handleCreateTaskBack = (flag) => {
       <!-- 内容 -->
       <div class="content">
         <div class="btns">
-          <el-button type="primary" @click="action = 'create'">创建解析任务</el-button>
+          <el-button type="primary" @click="goCreateTask">创建解析任务</el-button>
         </div>
 
         <div class="list">
@@ -90,11 +89,6 @@ const handleCreateTaskBack = (flag) => {
         </div>
       </div>
     </div>
-  </template>
-
-  <!-- 创建任务 -->
-  <template v-else-if="action === 'create'">
-    <CreateParseTask @create-task-back="handleCreateTaskBack" />
   </template>
 </template>
 

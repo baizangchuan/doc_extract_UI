@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import ViewCorrectionMedical from './view-correction-medical/index.vue'
+
+import TaskManagement from './c-pages/task.vue'
+import TemplateManagement from './c-pages/template.vue'
 
 defineOptions({
   name: 'ParseManagement'
@@ -17,31 +19,28 @@ const tabList = [
   }
 ]
 
-const active = ref('task')
-const viewType = ref('1')
+const tabName = ref('task')
 
 const handleTabClick = (item) => {
-  active.value = item.value
+  tabName.value = item.value
 }
 </script>
 
 <template>
-  <div class="parse-management" v-show="viewType === '0'">
+  <div class="parse-management">
     <div class="tab-list">
       <template v-for="item in tabList" :key="item.value">
-        <div class="item" :class="{ active: active === item.value }" @click="handleTabClick(item)">
+        <div class="item" :class="{ active: tabName === item.value }" @click="handleTabClick(item)">
           {{ item.name }}
         </div>
       </template>
     </div>
 
-    <!-- 按钮 -->
-    <div class="btn-wrapper">
-      <el-button type="primary">创建解析任务</el-button>
+    <div class="content">
+      <TaskManagement v-if="tabName === 'task'" />
+      <TemplateManagement v-else-if="tabName === 'template'" />
     </div>
   </div>
-
-  <ViewCorrectionMedical v-if="viewType !== '0'" :viewType="viewType" />
 </template>
 
 <style scoped lang="scss">
@@ -67,8 +66,8 @@ const handleTabClick = (item) => {
     }
   }
 
-  .btn-wrapper {
-    padding: 6px 20px;
+  .content {
+    height: calc(100% - 58px);
   }
 }
 </style>

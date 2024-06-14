@@ -21,9 +21,9 @@ const router = createRouter({
           component: () => import('@/views/parse-management/index.vue')
         },
         {
-          path: '/template-management',
-          name: 'TemplateManagement',
-          component: () => import('@/views/template-management/index.vue')
+          path: '/create-parse-task',
+          name: 'CreateParseTask',
+          component: () => import('@/views/create-parse-task/index.vue')
         }
       ]
     }

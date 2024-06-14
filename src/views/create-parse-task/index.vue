@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { Back } from '@element-plus/icons-vue'
 
@@ -9,11 +10,11 @@ import PreviewData from './preview-data.vue'
 
 import { getSampleListApi, saveTaskApi } from '@/services'
 
-const emit = defineEmits(['create-task-back'])
-
 defineOptions({
   name: 'CreateParseTask'
 })
+
+const router = useRouter()
 
 const taskRef = ref(null)
 const buttonDisabled = ref(true)
@@ -25,7 +26,7 @@ const dataList = ref(null)
 const sampleSource = ref('')
 
 const handleBack = () => {
-  emit('create-task-back')
+  router.back()
 }
 
 // 按钮激活
@@ -59,7 +60,9 @@ const handleStartTask = async () => {
   }
   await saveTaskApi(data)
   ElMessage.success('创建任务成功')
-  emit('create-task-back', true)
+  setTimeout(() => {
+    handleBack()
+  }, 2000)
 }
 
 // 处理预览切换页面
