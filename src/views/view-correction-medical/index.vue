@@ -1,4 +1,6 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
 import LeftText from './left-text.vue'
 import RightTemplate from './right-template.vue'
 
@@ -10,11 +12,11 @@ defineOptions({
   name: 'ViewCorrectionMedical'
 })
 
-defineProps({
-  viewType: {
-    type: String
-  }
-})
+const router = useRouter()
+
+const handleBack = () => {
+  router.back()
+}
 </script>
 
 <template>
@@ -23,7 +25,7 @@ defineProps({
     <div class="header">
       <el-button>
         <img :src="BackSvg" alt="" />
-        <span class="back-text">返回</span>
+        <span class="back-text" @click="handleBack">返回</span>
       </el-button>
 
       <div class="template-name">

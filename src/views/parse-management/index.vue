@@ -19,7 +19,7 @@ const tabList = [
   }
 ]
 
-const tabName = ref('task')
+const tabName = ref('template')
 
 const handleTabClick = (item) => {
   tabName.value = item.value

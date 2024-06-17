@@ -60,7 +60,7 @@ const handlePageChange = (current, total) => {
     </div>
 
     <div class="table-list">
-      <el-table class="custom-table" :data="taskList" style="width: 100%">
+      <el-table class="custom-table" :data="taskList" style="width: 100%; height: 100%">
         <!-- 序号列 -->
         <el-table-column label="序号" width="66" align="center">
           <template #default="scope"> {{ scope.$index + 1 }} </template>
@@ -142,7 +142,7 @@ const handlePageChange = (current, total) => {
         :page-sizes="[10, 20, 50, 100]"
         background
         layout="total, sizes, prev, pager, next, jumper"
-        :total="30"
+        :total="page.total"
       >
       </el-pagination>
     </div>
@@ -161,6 +161,7 @@ const handlePageChange = (current, total) => {
     height: calc(100% - 110px);
     :deep(.custom-table.el-table th.el-table__cell) {
       background-color: #eff5fa;
+      font-size: 13px;
     }
   }
 

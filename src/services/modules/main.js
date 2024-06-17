@@ -38,6 +38,31 @@ export function getAvailibleTemplateApi(orgName, recordType) {
 }
 
 /**
+ * 获取模板列表
+ * @param {*} params
+ */
+export function getTemplateListApi(params) {
+  return spdRequest.get({
+    url: '/template/list',
+    params
+  })
+}
+
+/**
+ * 删除模板
+ * @param {*} templateConfigId
+ */
+export function deleteTemplateApi(templateConfigId) {
+  return spdRequest.request({
+    url: '/template/delete',
+    method: 'put',
+    data: {
+      templateConfigId
+    }
+  })
+}
+
+/**
  * 上传样本文件
  */
 export function uploadSampleFileApi(file) {

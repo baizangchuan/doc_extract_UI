@@ -60,9 +60,7 @@ const handleStartTask = async () => {
   }
   await saveTaskApi(data)
   ElMessage.success('创建任务成功')
-  setTimeout(() => {
-    handleBack()
-  }, 2000)
+  handleBack()
 }
 
 // 处理预览切换页面

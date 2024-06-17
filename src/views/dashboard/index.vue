@@ -25,7 +25,7 @@ const pageAction = ref('query')
 const getSelectData = async () => {
   const result = await getSampleTypeListApi()
   orgList.value = result.data.orgList
-  recordTypeList.value = result.data.recordTypeList
+  recordTypeList.value = (result.data.recordTypeList || []).filter(Boolean)
 }
 
 // 查询可用的模板

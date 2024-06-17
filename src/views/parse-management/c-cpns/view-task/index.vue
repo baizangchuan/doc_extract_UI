@@ -17,7 +17,6 @@ const open = (parseTaskId) => {
 const loadData = async (id) => {
   const result = await getTaskInfoApi(id)
   taskInfo.value = result.data
-  console.log(result)
 }
 
 defineExpose({ open })
@@ -61,7 +60,7 @@ defineExpose({ open })
               :key="item.templateConfigName"
             >
               <div class="template-record">
-                <span>{{ index + 1 }}.{{ item.recordType }}</span>
+                <span class="sample-name">{{ index + 1 }}.{{ item.recordType }}</span>
                 <span class="sample-num">样本数量：{{ item.matchSampleNum }}</span>
               </div>
             </template>
@@ -108,21 +107,31 @@ defineExpose({ open })
   }
 
   .item .label {
-    width: 160px;
+    width: 80px;
     font-weight: bold;
     font-size: 13px;
   }
 
   .item .value {
-    width: calc(100% - 180px);
+    width: calc(100% - 86px);
+  }
+
+  .item.sample-file .value {
+    max-width: 300px;
   }
 
   .template-record {
-    width: 90%;
-    line-height: 26px;
+    position: relative;
+    top: -5px;
+    width: 100%;
+    line-height: 28px;
     display: flex;
-    span {
-      flex: 1;
+    .sample-name {
+      width: 40%;
+    }
+
+    .sample-num {
+      margin-left: 26px;
     }
   }
 
