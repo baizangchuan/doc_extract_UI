@@ -220,7 +220,6 @@ const handleDelete = (row) => {
 
   .table-list {
     height: calc(100% - 170px);
-    background-color: skyblue;
     :deep(.custom-table.el-table th.el-table__cell) {
       font-size: 13px;
       background-color: #eff5fa;

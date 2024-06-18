@@ -1,8 +1,11 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import LeftText from './left-text.vue'
 import RightTemplate from './right-template.vue'
+
+import { getTemplateInfoApi } from '@/services'
 
 import BackSvg from '@/assets/svg/back.svg'
 import EditSvg from '@/assets/svg/edit.svg'
@@ -13,6 +16,23 @@ defineOptions({
 })
 
 const router = useRouter()
+const route = useRoute()
+const params = route.params
+
+const info = ref({})
+const configNodeList = ref([])
+const matchSampleIdList = ref([])
+
+const loadData = async () => {
+  const result = await getTemplateInfoApi(params.id)
+  const { configNodes, matchSampleIds, ...rest } = result.data
+  configNodeList.value = configNodes
+  matchSampleIdList.value = matchSampleIds
+  info.value = rest
+}
+if (params.id) {
+  loadData()
+}
 
 const handleBack = () => {
   router.back()
@@ -29,30 +49,30 @@ const handleBack = () => {
       </el-button>
 
       <div class="template-name">
-        <span class="name">discharge_info</span>
+        <span class="name">{{ info.templateConfigName }}</span>
         <img :src="EditSvg" width="18" alt="" />
       </div>
 
-      <div class="status">
+      <!-- <div class="status">
         <span>纠错状态：</span>
         <el-tag type="success">已纠错</el-tag>
         <span class="time">2022-06-05 20:04:54</span>
-      </div>
+      </div> -->
 
       <div class="type">
         <span>文书类型：</span>
-        <span>入院记录</span>
+        <span>{{ info.recordType || '-' }}</span>
       </div>
 
-      <div class="task">
+      <!-- <div class="task">
         <span>所属任务：</span>
         <span>模板</span>
-      </div>
+      </div> -->
 
-      <div class="institution">
+      <!-- <div class="institution">
         <span>机构名称：</span>
         <span>415801168</span>
-      </div>
+      </div> -->
 
       <!-- 解析报告 -->
       <div class="parse-report">
@@ -66,10 +86,10 @@ const handleBack = () => {
     <!-- 内容 -->
     <div class="content">
       <div class="left">
-        <LeftText />
+        <LeftText :matchSampleIdList="matchSampleIdList" :info="info" />
       </div>
       <div class="right">
-        <RightTemplate />
+        <RightTemplate :configNodeList="configNodeList" :info="info" :type="params.type" />
       </div>
     </div>
   </div>
@@ -91,17 +111,21 @@ const handleBack = () => {
     .back-text {
       color: #606266;
       position: relative;
-      top: 2px;
+      top: 1px;
       margin-left: 4px;
     }
 
     .template-name {
-      margin-left: 16px;
+      margin: 0 16px;
       .name {
         position: relative;
         top: 1px;
         font-weight: bold;
-        margin-right: 10px;
+        margin-right: 4px;
+      }
+      img {
+        position: relative;
+        top: 2px;
       }
     }
 
@@ -120,7 +144,7 @@ const handleBack = () => {
     }
 
     .status .time::after,
-    .type::after,
+    /* .type::after, */
     .task::after {
       content: '';
       display: inline-block;
@@ -142,14 +166,13 @@ const handleBack = () => {
     .parse-report {
       position: absolute;
       right: 28px;
+      top: 14px;
       display: flex;
       align-items: center;
     }
 
     .parse-report .text {
       color: #409eff;
-      position: relative;
-      top: 2px;
       margin-left: 6px;
     }
   }

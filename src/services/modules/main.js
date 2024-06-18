@@ -49,6 +49,36 @@ export function getTemplateListApi(params) {
 }
 
 /**
+ * 查询模板详情
+ * @param {*} templateConfigId
+ * @returns
+ */
+export function getTemplateInfoApi(templateConfigId) {
+  return spdRequest.get({
+    url: '/template/info',
+    params: {
+      templateConfigId
+    }
+  })
+}
+
+/**
+ * 解析样本
+ * @param {*} templateConfigId
+ * @param {*} emrRecordId
+ * @returns
+ */
+export function parseSampleApi(templateConfigId, emrRecordId) {
+  return spdRequest.get({
+    url: '/sample/parse',
+    params: {
+      templateConfigId,
+      emrRecordId
+    }
+  })
+}
+
+/**
  * 删除模板
  * @param {*} templateConfigId
  */
@@ -114,5 +144,17 @@ export function getTaskInfoApi(parseTaskId) {
     params: {
       parseTaskId
     }
+  })
+}
+
+/**
+ * 保存模板
+ * @param {*} data
+ * @returns
+ */
+export function saveTemplateApi(data) {
+  return spdRequest.post({
+    url: '/template/save',
+    data
   })
 }

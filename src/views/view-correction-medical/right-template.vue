@@ -1,17 +1,87 @@
 <script setup>
+import { computed, watch, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
+import { saveTemplateApi } from '@/services'
 
 defineOptions({
   name: 'RightTemplate'
 })
+
+const props = defineProps({
+  type: {
+    type: String,
+    default: ''
+  },
+  info: {
+    type: Object,
+    default: () => ({})
+  },
+  configNodeList: {
+    type: Array,
+    default: () => []
+  }
+})
+
+watch(
+  () => props.configNodeList,
+  (value) => {
+    nodeList.value = value
+  }
+)
+
+const nodeList = ref([])
+
+const correctionFlag = computed(() => props.type === 'correction')
+
+const router = useRouter()
+
+// 取消
+const handleCancel = () => {
+  router.back()
+}
+
+// 新增
+const handleAdd = () => {
+  nodeList.value.unshift({})
+}
+
+// 删除
+const handleDelete = (row) => {
+  const newNodeList = nodeList.value.filter((item) => item !== row)
+  nodeList.value = newNodeList
+}
+
+const handleSave = async () => {
+  let flag = false
+  for (const item of nodeList.value) {
+    if (!item.configNodeKey || !item.admColumn) {
+      flag = true
+      break
+    }
+  }
+  if (flag) {
+    ElMessage.warning('请填写完整模板信息')
+    return
+  }
+  const data = {
+    templateConfigId: props.info.templateConfigId,
+    templateConfigName: props.info.templateConfigName,
+    configNodes: nodeList.value
+  }
+  await saveTemplateApi(data)
+  ElMessage.success('保存成功')
+  router.back()
+}
 </script>
 
 <template>
   <div class="right-template">
     <div class="header">
       <div class="left">解析病历模板</div>
-      <div class="right">
-        <el-button>
+      <div class="right" v-if="correctionFlag">
+        <el-button @click="handleAdd">
           <el-icon><Plus /></el-icon>
           <span class="text">新增</span>
         </el-button>
@@ -19,19 +89,47 @@ defineOptions({
     </div>
 
     <div class="content">
-      <el-table style="width: 100%" border>
-        <el-table-column prop="date" label="Date" width="180" />
-        <el-table-column prop="name" label="Name" width="180" />
-        <el-table-column prop="address" label="Address" />
+      <el-table :data="nodeList" class="custom-table" style="width: 100%; height: 100%" border>
+        <el-table-column prop="configNodeKey" label="名称" align="center">
+          <template #default="{ row }">
+            <span v-if="correctionFlag">
+              <el-input v-model="row.configNodeKey" placeholder="请输入名称" />
+            </span>
+            <span v-else>{{ row.configNodeKey }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="admColumn" label="标准schema" align="center">
+          <template #default="{ row }">
+            <span v-if="correctionFlag">
+              <el-input v-model="row.admColumn" placeholder="请输入标准schema" />
+            </span>
+            <span v-else>{{ row.admColumn }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="matchSampleNum" label="样本记录数" align="center" />
+        <el-table-column prop="repeatInSample" label="内容" align="center">
+          <template #default="{ row }">
+            {{ row.repeatInSample || '----' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center">
+          <template #default="{ row }">
+            <el-popconfirm title="确定删除吗?" @confirm="handleDelete(row)">
+              <template #reference>
+                <el-button type="danger" size="small" :link="true"> 删除 </el-button>
+              </template>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
 
     <div class="bottom">
       <div class="btns">
-        <el-button type="default" plain>
+        <el-button type="default" plain @click="handleCancel">
           <span>取消</span>
         </el-button>
-        <el-button type="primary">
+        <el-button type="primary" @click="handleSave">
           <span>保存</span>
         </el-button>
       </div>
@@ -71,22 +169,25 @@ defineOptions({
 
   .content {
     flex: 1;
-    padding: 20px;
+    padding: 2px 20px;
+    height: calc(100% - 162px);
+    :deep(.custom-table.el-table th.el-table__cell) {
+      font-size: 13px;
+      background-color: #eff5fa;
+    }
   }
 
   .bottom {
     border-top: 8px solid #f5f5f5;
     height: 58px;
-    line-height: 58px;
-    text-align: right;
+    line-height: 54px;
+    text-align: center;
 
     .btns {
       padding-right: 30px;
     }
 
     .btns span {
-      position: relative;
-      top: 1px;
       display: flex;
       padding: 0 10px;
     }
