@@ -73,8 +73,11 @@ const handleView = (row, type) => {
   router.push({
     name: 'ViewMedical',
     params: {
-      id: row.templateConfigId,
-      type
+      id: encodeURIComponent(row.templateConfigId),
+      type: encodeURIComponent(type),
+      rectifiedTime: encodeURIComponent(row.rectifiedTime || '0'),
+      taskName: encodeURIComponent(row.parseTaskName),
+      orgName: encodeURIComponent(row.orgName)
     }
   })
 }

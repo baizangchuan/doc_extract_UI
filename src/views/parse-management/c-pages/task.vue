@@ -118,7 +118,7 @@ const handlePageChange = (current, total) => {
               size="small"
               :link="true"
               @click="handleSeeTaskInfo(row)"
-              >错位日志</el-button
+              >错误日志</el-button
             >
             <el-button
               type="info"

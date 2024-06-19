@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import ParseReport from './parse-report.vue'
 import LeftText from './left-text.vue'
 import RightTemplate from './right-template.vue'
 
@@ -18,10 +19,16 @@ defineOptions({
 const router = useRouter()
 const route = useRoute()
 const params = route.params
-
+for (const key of Object.keys(params)) {
+  params[key] = decodeURIComponent(params[key])
+}
+const parseReportRef = ref()
 const info = ref({})
 const configNodeList = ref([])
 const matchSampleIdList = ref([])
+
+// 是否已纠错状态
+const correctionStatusFlag = computed(() => params.rectifiedTime !== '0')
 
 const loadData = async () => {
   const result = await getTemplateInfoApi(params.id)
@@ -37,10 +44,18 @@ if (params.id) {
 const handleBack = () => {
   router.back()
 }
+
+// 查看解析报告
+const handleViewReport = () => {
+  parseReportRef.value.open(info.value.matchSampleNum, configNodeList.value)
+}
 </script>
 
 <template>
   <div class="view-correction-medical">
+    <!-- 解析报告 -->
+    <ParseReport ref="parseReportRef" />
+
     <!-- 头部区域 -->
     <div class="header">
       <el-button>
@@ -53,30 +68,32 @@ const handleBack = () => {
         <img :src="EditSvg" width="18" alt="" />
       </div>
 
-      <!-- <div class="status">
+      <div class="status">
         <span>纠错状态：</span>
-        <el-tag type="success">已纠错</el-tag>
-        <span class="time">2022-06-05 20:04:54</span>
-      </div> -->
+        <el-tag :type="correctionStatusFlag ? 'success' : 'info'">{{
+          correctionStatusFlag ? '已纠错' : '未纠错'
+        }}</el-tag>
+        <span class="time" v-if="correctionStatusFlag">2022-06-05 20:04:54</span>
+      </div>
 
       <div class="type">
         <span>文书类型：</span>
         <span>{{ info.recordType || '-' }}</span>
       </div>
 
-      <!-- <div class="task">
+      <div class="task">
         <span>所属任务：</span>
-        <span>模板</span>
-      </div> -->
+        <span>{{ params.taskName }}</span>
+      </div>
 
-      <!-- <div class="institution">
+      <div class="institution">
         <span>机构名称：</span>
-        <span>415801168</span>
-      </div> -->
+        <span>{{ params.orgName }}</span>
+      </div>
 
       <!-- 解析报告 -->
       <div class="parse-report">
-        <el-button style="border-color: #409eff">
+        <el-button style="border-color: #409eff" @click="handleViewReport">
           <img :src="ReportSvg" height="16" alt="" />
           <span class="text">解析报告</span>
         </el-button>
@@ -143,8 +160,8 @@ const handleBack = () => {
       align-items: center;
     }
 
-    .status .time::after,
-    /* .type::after, */
+    .status::after,
+    .type::after,
     .task::after {
       content: '';
       display: inline-block;
@@ -165,7 +182,7 @@ const handleBack = () => {
 
     .parse-report {
       position: absolute;
-      right: 28px;
+      right: 18px;
       top: 14px;
       display: flex;
       align-items: center;

@@ -145,7 +145,7 @@ const handleSave = async () => {
 
   .header {
     height: 58px;
-    padding: 16px;
+    padding: 16px 20px;
     box-sizing: border-box;
     display: flex;
     align-items: center;

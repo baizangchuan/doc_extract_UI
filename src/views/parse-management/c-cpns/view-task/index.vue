@@ -23,7 +23,7 @@ defineExpose({ open })
 </script>
 
 <template>
-  <el-drawer v-model="visible" title="I am thsse title">
+  <el-drawer v-model="visible">
     <template #header>
       <h4 class="title">查看详情</h4>
     </template>

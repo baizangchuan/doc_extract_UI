@@ -56,9 +56,11 @@ const goCreateTask = () => {
         <el-form :model="searchParams" inline>
           <el-form-item label="机构名称:">
             <el-select
+              clearable
               v-model="searchParams.orgName"
+              @change="getTemplateList"
               placeholder="请选择机构名称"
-              style="width: 200px"
+              style="width: 260px"
             >
               <el-option v-for="item in orgList" :key="item" :label="item" :value="item" />
             </el-select>
@@ -67,9 +69,11 @@ const goCreateTask = () => {
           <el-form-item label="文书类型:">
             <el-select
               filterable
+              clearable
               v-model="searchParams.recordType"
+              @change="getTemplateList"
               placeholder="请选择文书类型"
-              style="width: 200px"
+              style="width: 260px"
             >
               <el-option v-for="item in recordTypeList" :key="item" :label="item" :value="item" />
             </el-select>

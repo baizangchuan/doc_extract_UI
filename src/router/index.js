@@ -26,7 +26,7 @@ const router = createRouter({
           component: () => import('@/views/create-parse-task/index.vue')
         },
         {
-          path: '/view/medical/:id/:type',
+          path: '/view/medical/:id/:type/:taskName/:orgName/:rectifiedTime',
           name: 'ViewMedical',
           component: () => import('@/views/view-correction-medical/index.vue')
         }
