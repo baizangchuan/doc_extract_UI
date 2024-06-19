@@ -13,22 +13,42 @@ const router = createRouter({
         {
           path: '/dashboard',
           name: 'Dashboard',
-          component: () => import('@/views/dashboard/index.vue')
+          component: () => import('@/views/dashboard/index.vue'),
+          meta: {
+            title: '首页'
+          }
         },
         {
           path: '/parse-management',
           name: 'ParseManagement',
-          component: () => import('@/views/parse-management/index.vue')
+          component: () => import('@/views/parse-management/index.vue'),
+          meta: {
+            title: '解析管理'
+          }
         },
         {
           path: '/create-parse-task',
           name: 'CreateParseTask',
-          component: () => import('@/views/create-parse-task/index.vue')
+          component: () => import('@/views/create-parse-task/index.vue'),
+          meta: {
+            title: '创建解析任务'
+          }
         },
         {
           path: '/view/medical/:id/:type/:taskName/:orgName/:rectifiedTime',
           name: 'ViewMedical',
-          component: () => import('@/views/view-correction-medical/index.vue')
+          component: () => import('@/views/view-correction-medical/index.vue'),
+          meta: {
+            title: '查看模板'
+          }
+        },
+        {
+          path: '/similarity-diagnosis',
+          name: 'SimilarityDiagnosis',
+          component: () => import('@/views/similarity-diagnosis/index.vue'),
+          meta: {
+            title: '相似度诊断'
+          }
         }
       ]
     }

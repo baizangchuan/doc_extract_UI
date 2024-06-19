@@ -95,6 +95,13 @@ const handleDelete = (row) => {
     })
     .catch(() => {})
 }
+
+// 相似度诊断点击
+const handleSimilarityClick = () => {
+  router.push({
+    path: '/similarity-diagnosis'
+  })
+}
 </script>
 
 <template>
@@ -140,7 +147,7 @@ const handleDelete = (row) => {
 
     <!-- 相似度 -->
     <div class="similarity">
-      <el-button type="primary">相似度诊断</el-button>
+      <el-button type="primary" @click="handleSimilarityClick">相似度诊断</el-button>
     </div>
 
     <!-- 表格 -->
