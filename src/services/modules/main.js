@@ -158,3 +158,17 @@ export function saveTemplateApi(data) {
     data
   })
 }
+
+/**
+ * 相似度诊断
+ * @param {*} data
+ * @returns
+ */
+export function compareTemplateApi(orgName) {
+  return spdRequest.get({
+    url: '/template/compare',
+    params: {
+      orgName
+    }
+  })
+}

@@ -3,6 +3,8 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
+import Diagnosis from '../c-cpns/diagnosis/index.vue'
+
 import { getSampleTypeListApi, getTemplateListApi, deleteTemplateApi } from '@/services'
 
 defineOptions({
@@ -29,6 +31,8 @@ const templateList = ref([])
 const total = ref(0)
 const orgList = ref([])
 const recordTypeList = ref([])
+
+const diagnosisRef = ref()
 
 // 获取查询下拉框数据
 const getSelectData = async () => {
@@ -98,14 +102,15 @@ const handleDelete = (row) => {
 
 // 相似度诊断点击
 const handleSimilarityClick = () => {
-  router.push({
-    path: '/similarity-diagnosis'
-  })
+  diagnosisRef.value.open(orgList.value)
 }
 </script>
 
 <template>
   <div class="template">
+    <!-- 相似度诊断 -->
+    <Diagnosis ref="diagnosisRef" />
+
     <!-- 搜索表单 -->
     <div class="header">
       <el-form :model="searchParams" inline>

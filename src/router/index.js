@@ -43,7 +43,7 @@ const router = createRouter({
           }
         },
         {
-          path: '/similarity-diagnosis',
+          path: '/similarity-diagnosis/:orgName',
           name: 'SimilarityDiagnosis',
           component: () => import('@/views/similarity-diagnosis/index.vue'),
           meta: {
