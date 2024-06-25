@@ -109,7 +109,7 @@ const handleSave = async () => {
         <el-table-column prop="matchSampleNum" label="样本记录数" align="center" />
         <el-table-column prop="repeatInSample" label="内容" align="center">
           <template #default="{ row }">
-            {{ row.repeatInSample || '----' }}
+            {{ row.repeatInSample || '-' }}
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center">

@@ -26,7 +26,6 @@ const close = () => {
 // 处理点击确定
 const handleOk = () => {
   formRef.value.validate((valid) => {
-    console.log(valid)
     if (valid) {
       router.push({
         name: 'SimilarityDiagnosis',

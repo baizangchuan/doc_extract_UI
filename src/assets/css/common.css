@@ -13,3 +13,9 @@ body {
 #app {
   height: 100%;
 }
+
+mark {
+  background-color: #ebf5ff;
+  color: #409eff;
+  padding: 1px 2px;
+}

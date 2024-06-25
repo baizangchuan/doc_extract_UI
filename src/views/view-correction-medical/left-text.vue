@@ -1,10 +1,11 @@
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, nextTick } from 'vue'
 
 import ArrowLeft from '@/components/svg/arrow-left.vue'
 import ArrowRight from '@/components/svg/arrow-right.vue'
 
 import { parseSampleApi } from '@/services'
+import { highlightText } from '@/utils/format'
 
 defineOptions({
   name: 'LeftText'
@@ -16,6 +17,10 @@ const props = defineProps({
     default: () => ({})
   },
   matchSampleIdList: {
+    type: Array,
+    default: () => []
+  },
+  configNodeList: {
     type: Array,
     default: () => []
   }
@@ -39,11 +44,16 @@ const page = reactive({
 
 const tabName = ref('sample')
 const sampleInfo = ref({})
+const sampleRef = ref()
 
 const loadParseSample = async () => {
   const { info, matchSampleIdList } = props
   const result = await parseSampleApi(info.templateConfigId, matchSampleIdList[page.current - 1])
   sampleInfo.value = result.data
+  const configNodeKeyList = props.configNodeList.map((item) => item.configNodeKey) || []
+  nextTick(() => {
+    highlightText(sampleRef.value, configNodeKeyList)
+  })
 }
 
 const handleSwitchPage = (delta) => {
@@ -91,8 +101,8 @@ const handleSwitchPage = (delta) => {
     <!-- 内容 -->
     <div class="content">
       <el-scrollbar class="scroll">
-        <div v-if="tabName === 'sample'" v-html="sampleInfo.content"></div>
-        <div v-if="tabName === 'plain'">{{ sampleInfo.originContent }}</div>
+        <div v-show="tabName === 'sample'" ref="sampleRef" v-text="sampleInfo.content"></div>
+        <div v-show="tabName === 'plain'">{{ sampleInfo.originContent }}</div>
       </el-scrollbar>
     </div>
   </div>

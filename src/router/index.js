@@ -39,7 +39,7 @@ const router = createRouter({
           name: 'ViewMedical',
           component: () => import('@/views/view-correction-medical/index.vue'),
           meta: {
-            title: '查看模板'
+            title: '模板详情'
           }
         },
         {

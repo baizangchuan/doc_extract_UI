@@ -58,9 +58,9 @@ const handleViewReport = () => {
 
     <!-- 头部区域 -->
     <div class="header">
-      <el-button>
+      <el-button @click="handleBack">
         <img :src="BackSvg" alt="" />
-        <span class="back-text" @click="handleBack">返回</span>
+        <span class="back-text">返回</span>
       </el-button>
 
       <div class="template-name">
@@ -103,7 +103,11 @@ const handleViewReport = () => {
     <!-- 内容 -->
     <div class="content">
       <div class="left">
-        <LeftText :matchSampleIdList="matchSampleIdList" :info="info" />
+        <LeftText
+          :matchSampleIdList="matchSampleIdList"
+          :info="info"
+          :configNodeList="configNodeList"
+        />
       </div>
       <div class="right">
         <RightTemplate :configNodeList="configNodeList" :info="info" :type="params.type" />

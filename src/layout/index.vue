@@ -1,5 +1,5 @@
 <script setup>
-// import Breadcrumb from './breadcrumb.vue'
+import Breadcrumb from './breadcrumb.vue'
 
 import HeaderRight from './header-right.vue'
 import Menu from './menu.vue'
@@ -32,9 +32,9 @@ defineOptions({
       </el-header>
       <el-main class="content">
         <!-- 面包屑 -->
-        <!-- <div class="breadcrumb">
+        <div class="breadcrumb">
           <Breadcrumb />
-        </div> -->
+        </div>
 
         <div class="main-content">
           <RouterView />

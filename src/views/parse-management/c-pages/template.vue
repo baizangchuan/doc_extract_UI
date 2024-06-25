@@ -88,11 +88,10 @@ const handleView = (row, type) => {
 
 // 处理删除
 const handleDelete = (row) => {
-  ElMessageBox.confirm('您确定要删除吗？删除之后模板将不可用', {
+  ElMessageBox.confirm('删除之后模板将不可用', '您确定要删除吗？', {
     type: 'warning'
   })
     .then(async () => {
-      console.log(row.templateConfigId)
       await deleteTemplateApi(row.templateConfigId)
       ElMessage.success('删除成功')
       loadData()
@@ -168,7 +167,7 @@ const handleSimilarityClick = () => {
         <el-table-column prop="matchSampleNum" label="样板病例数" align="center" />
 
         <el-table-column prop="recordType" label="文书类型" align="center">
-          <template #default="{ row }"> {{ row.recordType || '----' }} </template>
+          <template #default="{ row }"> {{ row.recordType || '-' }} </template>
         </el-table-column>
 
         <el-table-column prop="parseTaskName" label="所属任务" align="center" />
@@ -178,7 +177,7 @@ const handleSimilarityClick = () => {
         <el-table-column prop="rectifiedTime" label="纠错状态" align="center">
           <template #default="{ row }">
             <span class="correction" v-if="row.rectifiedTime">已纠错({{ row.rectifiedTime }}</span>
-            <span class="correction" v-else>----</span>
+            <span class="correction" v-else>-</span>
           </template>
         </el-table-column>
 
