@@ -90,6 +90,12 @@ const handleSave = async () => {
 
     <div class="content">
       <el-table :data="nodeList" class="custom-table" style="width: 100%; height: 100%" border>
+        <!-- <el-table-column align="center" width="80">
+          <template>
+            <el-icon><CirclePlus :size="50" color="#409eff" /></el-icon>
+          </template>
+        </el-table-column> -->
+
         <el-table-column prop="configNodeKey" label="名称" align="center">
           <template #default="{ row }">
             <span v-if="correctionFlag">

@@ -37,7 +37,11 @@ defineOptions({
         </div>
 
         <div class="main-content">
-          <RouterView />
+          <RouterView v-slot="{ Component }">
+            <KeepAlive include="ParseManagement">
+              <component :is="Component" :key="$route.fullPath" />
+            </KeepAlive>
+          </RouterView>
         </div>
       </el-main>
     </el-container>

@@ -105,6 +105,7 @@ const handlePageChange = (current, total) => {
         <el-table-column label="操作" align="center" width="230">
           <template #default="{ row }">
             <el-button
+              v-if="row.status !== 2"
               type="info"
               disabled
               size="small"
@@ -113,6 +114,7 @@ const handlePageChange = (current, total) => {
               >重新开始</el-button
             >
             <el-button
+              v-if="row.status !== 2"
               type="info"
               disabled
               size="small"
@@ -121,6 +123,7 @@ const handlePageChange = (current, total) => {
               >错误日志</el-button
             >
             <el-button
+              v-if="row.status !== 2"
               type="info"
               disabled
               size="small"

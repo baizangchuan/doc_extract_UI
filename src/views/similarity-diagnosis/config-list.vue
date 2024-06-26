@@ -35,15 +35,21 @@ const processData = (data) => {
     }
   })
 
-  // 组装表格数据
+  // 组装表格行数据
   const rowLength = data[0].configNodes?.length || 0
   const rows = []
   for (let i = 0; i < rowLength; i++) {
     const row = {}
+    let isSame = true
+    let text = data[0].configNodes[i].configNodeKey
     for (let j = 0; j < data.length; j++) {
       const { configNodes, ...rest } = data[j]
       row['configNodeKey' + (j + 1)] = { node: configNodes[i], ...rest }
+      if (configNodes[i]?.configNodeKey !== text) {
+        isSame = false
+      }
     }
+    row.isSame = isSame
     rows.push(row)
   }
   tableList.value = rows
@@ -55,11 +61,17 @@ const processData = (data) => {
     <template v-for="(item, index) in columns" :key="item.prop">
       <el-table-column show-overflow-tooltip :prop="item.prop" :label="item.label">
         <template #default="{ row }">
-          {{ row['configNodeKey' + (index + 1)]?.node?.configNodeKey || '-' }}
+          <span :class="{ 'not-same': !row.isSame }">
+            {{ row['configNodeKey' + (index + 1)]?.node?.configNodeKey || '-' }}
+          </span>
         </template>
       </el-table-column>
     </template>
   </el-table>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.not-same {
+  color: red;
+}
+</style>

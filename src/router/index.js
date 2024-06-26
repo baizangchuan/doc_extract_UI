@@ -23,7 +23,8 @@ const router = createRouter({
           name: 'ParseManagement',
           component: () => import('@/views/parse-management/index.vue'),
           meta: {
-            title: '解析管理'
+            title: '解析管理',
+            keepAlive: true
           }
         },
         {
@@ -39,7 +40,7 @@ const router = createRouter({
           name: 'ViewMedical',
           component: () => import('@/views/view-correction-medical/index.vue'),
           meta: {
-            title: '模板详情'
+            title: '模板信息'
           }
         },
         {
