@@ -31,7 +31,9 @@ const getSelectData = async () => {
 // 查询可用的模板
 const getTemplateList = async () => {
   const result = await getAvailibleTemplateApi(searchParams.orgName, searchParams.recordType)
-  templateList.value = result.data
+  console.log(result)
+  // templateList.value = result.data
+  templateList.value = result
 }
 
 // 初始化

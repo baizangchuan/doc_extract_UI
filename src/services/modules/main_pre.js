@@ -23,7 +23,7 @@ export function getSampleListApi(params) {
 
 /**
  * 获取模板可用列表
- * @param {string} orgName 机构名称
+ * @param {string} orgName 机构ID
  * @param {string} recordType 文书类别
  * @returns
  */

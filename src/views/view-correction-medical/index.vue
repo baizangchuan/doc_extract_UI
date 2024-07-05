@@ -205,6 +205,7 @@ const handleViewReport = () => {
     gap: 12px;
 
     .left {
+      flex-shrink: 0;
       height: 100%;
       width: 386px;
       background-color: white;
@@ -216,6 +217,7 @@ const handleViewReport = () => {
       height: 100%;
       background-color: white;
       border-radius: 4px;
+      overflow: auto;
     }
   }
 }

@@ -1,8 +1,11 @@
 <script setup>
 import { computed, watch, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+
+import SelectInput from '@/components/select-input.vue'
+
 import { saveTemplateApi } from '@/services'
 
 defineOptions({
@@ -90,13 +93,7 @@ const handleSave = async () => {
 
     <div class="content">
       <el-table :data="nodeList" class="custom-table" style="width: 100%; height: 100%" border>
-        <!-- <el-table-column align="center" width="80">
-          <template>
-            <el-icon><CirclePlus :size="50" color="#409eff" /></el-icon>
-          </template>
-        </el-table-column> -->
-
-        <el-table-column prop="configNodeKey" label="名称" align="center">
+        <el-table-column :width="200" prop="configNodeKey" label="名称" align="center">
           <template #default="{ row }">
             <span v-if="correctionFlag">
               <el-input v-model="row.configNodeKey" placeholder="请输入名称" />
@@ -104,20 +101,53 @@ const handleSave = async () => {
             <span v-else>{{ row.configNodeKey }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="admColumn" label="标准schema" align="center">
+
+        <el-table-column :width="230" prop="admColumn" label="标准schema" align="center">
           <template #default="{ row }">
             <span v-if="correctionFlag">
-              <el-input v-model="row.admColumn" placeholder="请输入标准schema" />
+              <SelectInput
+                v-model="row.admColumn"
+                :options="[
+                  { label: '11111111111111', value: '111111' },
+                  { label: '2111111111111111', value: '2' }
+                ]"
+              />
             </span>
             <span v-else>{{ row.admColumn }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="matchSampleNum" label="样本记录数" align="center" />
-        <el-table-column prop="repeatInSample" label="内容" align="center">
+
+        <el-table-column :width="200" prop="configNodeType" label="所属的上级节点" align="center">
+          <template #default="{ row }">
+            <span v-if="correctionFlag">
+              <el-input placeholder="" />
+            </span>
+            <span v-else>{{ row.admColumn }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :width="200"
+          prop="configNodeType"
+          label="是否直接取匹配内容"
+          align="center"
+        >
+          <template #default="{ row }">
+            <span v-if="correctionFlag">
+              <el-input placeholder="" />
+            </span>
+            <span v-else>{{ row.admColumn }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column :width="160" prop="matchSampleNum" label="样本记录数" align="center" />
+
+        <el-table-column :width="200" prop="repeatInSample" label="内容" align="center">
           <template #default="{ row }">
             {{ row.repeatInSample || '-' }}
           </template>
         </el-table-column>
+
         <el-table-column label="操作" align="center">
           <template #default="{ row }">
             <el-popconfirm title="确定删除吗?" @confirm="handleDelete(row)">

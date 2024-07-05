@@ -29,7 +29,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://192.168.31.227/parse/api/v1.0',
+        // target: 'http://192.168.31.227/parse/api/v1.0',
+        target: 'http://192.168.31.226:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false
