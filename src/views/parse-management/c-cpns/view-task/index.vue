@@ -60,7 +60,7 @@ defineExpose({ open })
               :key="item.templateConfigName"
             >
               <div class="template-record">
-                <span class="sample-name">{{ index + 1 }}.{{ item.recordType }}</span>
+                <span class="sample-name">{{ index + 1 }}.{{ item.recordType || '-' }}</span>
                 <span class="sample-num">样本数量：{{ item.matchSampleNum }}</span>
               </div>
             </template>

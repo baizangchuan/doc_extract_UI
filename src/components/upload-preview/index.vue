@@ -31,10 +31,10 @@ const handleClosePreview = () => {
     </div>
 
     <div class="content">
-      <h4>{{ fileInfo.fileName }}</h4>
-      <p>文件大小：{{ fileInfo.fileSize }}</p>
-      <p>上传时间：{{ fileInfo.gmtCreated }}</p>
-      <p>样本总数：{{ fileInfo.sampleNum }}</p>
+      <h4>{{ fileInfo?.fileName || '-' }}</h4>
+      <p>文件大小：{{ fileInfo?.fileSize || '-' }}</p>
+      <p>上传时间：{{ fileInfo?.gmtCreated || '-' }}</p>
+      <p>样本总数：{{ fileInfo?.sampleNum || '-' }}</p>
     </div>
 
     <div v-if="closeIcon" class="close-icon" @click="handleClosePreview">

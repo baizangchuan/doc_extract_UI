@@ -23,7 +23,7 @@ export function getSampleListApi(params) {
 
 /**
  * 获取模板可用列表
- * @param {string} orgName 机构名称
+ * @param {string} orgName 机构ID
  * @param {string} recordType 文书类别
  * @returns
  */
@@ -63,30 +63,14 @@ export function getTemplateInfoApi(templateConfigId) {
 }
 
 /**
- * 解析样本
- * @param {*} templateConfigId
- * @param {*} emrRecordId
- * @returns
- */
-export function parseSampleApi(templateConfigId, emrRecordId) {
-  return spdRequest.get({
-    url: '/sample/parse',
-    params: {
-      templateConfigId,
-      emrRecordId
-    }
-  })
-}
-
-/**
  * 删除模板
  * @param {*} templateConfigId
  */
 export function deleteTemplateApi(templateConfigId) {
   return spdRequest.request({
     url: '/template/delete',
-    method: 'put',
-    data: {
+    method: 'get',
+    params: {
       templateConfigId
     }
   })
@@ -172,3 +156,36 @@ export function compareTemplateApi(orgName) {
     }
   })
 }
+
+/**
+ * 解析样本
+ * @param {*} templateConfigId
+ * @param {*} emrRecordId
+ * @returns
+ */
+export function parseSampleApi(templateConfigId, emrRecordId) {
+  return spdRequest.get({
+    url: '/sample/parse',
+    params: {
+      templateConfigId,
+      emrRecordId
+    }
+  })
+}
+
+// /**
+//  * 解析样本
+//  * @param {*} templateConfigId
+//  * @param {*} emrRecordId
+//  * @returns
+//  */
+// export function parseSampleApi(templateConfigId, emrRecordId) {
+//   return parseRequest.post({
+//     // url: '/sample/process',
+//     url: '/api/process',
+//     data: {
+//       templateConfigId,
+//       emrRecordId
+//     }
+//   })
+// }

@@ -15,18 +15,20 @@ defineOptions({
 
 const router = useRouter()
 
-const page = reactive({
-  current: 1,
-  total: 10
+const total = ref(0)
+
+const searchParams = reactive({
+  pageNum: 1,
+  pageSize: 20
 })
 const taskList = ref([])
 const viewRef = ref(null)
 
 const loadData = async () => {
-  const result = await getTaskListApi(page.current, page.total)
+  const result = await getTaskListApi(searchParams.pageNum, searchParams.pageSize)
   const data = result.data
   taskList.value = data.dataList
-  page.total = data.totalCount
+  total.value = data.totalCount
 }
 
 loadData()
@@ -43,8 +45,8 @@ const handleSeeTaskInfo = (task) => {
 
 // 切换页
 const handlePageChange = (current, total) => {
-  page.current = current
-  page.total = total
+  searchParams.pageNum = current
+  searchParams.pageSize = total
   loadData()
 }
 </script>
@@ -145,9 +147,8 @@ const handlePageChange = (current, total) => {
         :page-sizes="[10, 20, 50, 100]"
         background
         layout="total, sizes, prev, pager, next, jumper"
-        :total="page.total"
-      >
-      </el-pagination>
+        :total="total"
+      />
     </div>
   </div>
 </template>

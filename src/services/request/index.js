@@ -54,3 +54,5 @@ class SpdRequest {
 }
 
 export default new SpdRequest(BASE_URL, TIME_OUT)
+
+export const parseRequest = new SpdRequest('/api1', TIME_OUT)

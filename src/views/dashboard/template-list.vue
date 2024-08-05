@@ -31,7 +31,7 @@ defineProps({
 
               <div>
                 <span class="label">Key数量：</span>
-                <span class="value">{{ item.nodeCount }}</span>
+                <span class="value">{{ item.nodeCount || '-' }}</span>
               </div>
             </h4>
             <h4 class="update-time">

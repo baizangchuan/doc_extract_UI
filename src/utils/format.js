@@ -33,3 +33,28 @@ export function highlightText(DOM, textArray, options = {}) {
     instance.markRegExp(new RegExp(text), options)
   }
 }
+
+/**
+ * 下划线转小驼峰命名
+ * @param {*} str
+ * @returns
+ */
+export function underscoreToCamelCase(str) {
+  return str
+    .split('_')
+    .map((word, index) => (index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+    .join('')
+}
+
+/**
+ * 将对象属性下划线转小驼峰命名
+ * @param {*} obj
+ * @returns
+ */
+export function processkeyOfObject(obj) {
+  const newObj = {}
+  for (const k in obj) {
+    newObj[underscoreToCamelCase(k)] = obj[k]
+  }
+  return newObj
+}

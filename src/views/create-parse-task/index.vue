@@ -39,17 +39,20 @@ const handleDataPreview = async (orgName, sampleFileId) => {
   sampleSource.value = sampleFileId
   const result = await getSampleListApi({
     orgName,
-    sampleSource,
+    sampleSource: sampleSource.value,
     pageNum: 1,
     pageSize: 50
   })
   dataList.value = result.data.dataList
-  page.total = result.data.rows
+  page.total = dataList.value.length
   ElMessage.success('获取数据成功')
 }
 
 // 处理创建任务
 const handleStartTask = async () => {
+  if (sampleSource.value === '') {
+    return ElMessage.warning('请先预览数据')
+  }
   const { taskForm } = taskRef.value
   const data = {
     name: taskForm.name,

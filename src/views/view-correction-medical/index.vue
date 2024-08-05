@@ -83,7 +83,7 @@ const handleViewReport = () => {
 
       <div class="task">
         <span>所属任务：</span>
-        <span>{{ params.taskName }}</span>
+        <span>{{ params.taskName || '-' }}</span>
       </div>
 
       <div class="institution">
