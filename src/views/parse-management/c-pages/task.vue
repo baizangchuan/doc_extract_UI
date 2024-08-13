@@ -80,7 +80,7 @@ const handlePageChange = (current, total) => {
 
         <el-table-column prop="sampleImportType" label="导入方式" align="center">
           <template #default="{ row }">
-            {{ getImportTypeText(row.sampleImportType) }}
+            {{ getImportTypeText(row.sampleImportType) || '-' }}
           </template>
         </el-table-column>
 
@@ -145,6 +145,7 @@ const handlePageChange = (current, total) => {
       <el-pagination
         @change="handlePageChange"
         :page-sizes="[10, 20, 50, 100]"
+        :default-page-size="searchParams.pageSize"
         background
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"

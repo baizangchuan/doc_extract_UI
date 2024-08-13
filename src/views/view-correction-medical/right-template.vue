@@ -93,7 +93,7 @@ const handleSave = async () => {
 
     <div class="content">
       <el-table :data="nodeList" class="custom-table" style="width: 100%; height: 100%" border>
-        <el-table-column prop="configNodeKey" label="名称" align="center">
+        <el-table-column :width="200" prop="configNodeKey" label="名称" align="center">
           <template #default="{ row }">
             <span v-if="correctionFlag">
               <el-input v-model="row.configNodeKey" placeholder="请输入名称" />
@@ -102,43 +102,35 @@ const handleSave = async () => {
           </template>
         </el-table-column>
 
-        <el-table-column prop="admColumn" label="标准schema" align="center">
+        <el-table-column :width="200" prop="admColumn" label="标准schema" align="center">
           <template #default="{ row }">
             <span v-if="correctionFlag">
-              <SelectInput
-                :no-value="true"
-                v-model="row.admColumn"
-                :options="[
-                  { label: '11111111111111', value: '111111' },
-                  { label: '2111111111111111', value: '2' }
-                ]"
-              />
+              <SelectInput :no-value="true" v-model="row.admColumn" :show-select="false" />
             </span>
             <span v-else>{{ row.admColumn }}</span>
           </template>
         </el-table-column>
 
-        <!-- <el-table-column :width="200" prop="configNodeType" label="所属的上级节点" align="center">
+        <el-table-column :width="200" prop="configNodeType" label="所属的上级节点" align="center">
           <template #default="{ row }">
-            <span v-if="correctionFlag">
-              <el-input placeholder="" />
-            </span>
-            <span v-else>{{ row.admColumn }}</span>
-          </template>
-        </el-table-column> -->
-
-        <el-table-column prop="configNodeType" label="是否直接取匹配内容" align="center">
-          <template #default="{ row }">
-            <span v-if="correctionFlag">
-              <el-input placeholder="" />
-            </span>
-            <span v-else>{{ row.admColumn }}</span>
+            <span>{{ row.firstNode || '-' }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column prop="matchSampleNum" label="样本记录数" align="center" />
+        <el-table-column
+          :width="200"
+          prop="configNodeType"
+          label="是否直接取匹配内容"
+          align="center"
+        >
+          <template #default="{ row }">
+            <span>{{ row.isRegular || '-' }}</span>
+          </template>
+        </el-table-column>
 
-        <el-table-column prop="repeatInSample" label="内容" align="center">
+        <el-table-column :width="160" prop="matchSampleNum" label="样本记录数" align="center" />
+
+        <el-table-column :width="160" prop="repeatInSample" label="内容" align="center">
           <template #default="{ row }">
             {{ row.repeatInSample || '-' }}
           </template>
@@ -147,7 +139,6 @@ const handleSave = async () => {
         <el-table-column label="操作" align="center">
           <template #default="{ row }">
             <div>
-              <el-button type="primary" size="small" :link="true"> 新增 </el-button>
               <el-button type="danger" size="small" :link="true" @click="handleDelete(row)">
                 删除
               </el-button>

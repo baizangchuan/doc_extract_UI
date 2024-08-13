@@ -13,6 +13,10 @@ const props = defineProps({
   noValue: {
     type: Boolean,
     default: false
+  },
+  showSelect: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -43,7 +47,7 @@ const handleClear = () => {
 
 <template>
   <el-input v-model="value" @input="handleInput" @clear="handleClear">
-    <template #append>
+    <template #append v-if="showSelect">
       <el-select style="width: 60px" v-model="value" @change="handleChange" placeholder="">
         <el-option
           v-for="item in options"
