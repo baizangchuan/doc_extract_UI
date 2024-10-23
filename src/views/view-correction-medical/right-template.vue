@@ -112,8 +112,15 @@ const handleSave = async () => {
         </el-table-column>
 
         <el-table-column :width="200" prop="configNodeType" label="所属的上级节点" align="center">
-          <template #default="{ row }">
+          <!-- <template #default="{ row }">
             <span>{{ row.firstNode || '-' }}</span>
+          </template> -->
+
+          <template #default="{ row }">
+            <span v-if="correctionFlag">
+              <el-input v-model="row.firstNode" placeholder="请填写上级节点" />
+            </span>
+            <span v-else>{{ row.firstNode || '-' }}</span>
           </template>
         </el-table-column>
 
