@@ -46,8 +46,8 @@ const handleCancel = () => {
 }
 
 // 新增
-const handleAdd = () => {
-  nodeList.value.unshift({})
+const handleAdd = (index) => {
+  nodeList.value.splice(index + 1, 0, {})
 }
 
 // 删除
@@ -144,8 +144,11 @@ const handleSave = async () => {
         </el-table-column>
 
         <el-table-column label="操作" align="center">
-          <template #default="{ row }">
+          <template #default="{ row, $index }">
             <div>
+              <el-button type="primary" size="small" @click="handleAdd($index)">
+                新增一行
+              </el-button>
               <el-button type="danger" size="small" :link="true" @click="handleDelete(row)">
                 删除
               </el-button>
